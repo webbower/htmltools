@@ -145,3 +145,23 @@ Returns `true` if the current profile is HTML4-compatible, and `false` if it isn
 Determines if the current profile is an XML-strict one.
 
 Returns `true` if the current profile is XML-strict, and `false` if it isn't
+
+### `setCharset($charset = 'UTF-8')`
+
+Sets the character encoding. The `HTML` class defaults to `UTF-8` if this is never called
+
+* `$charset` - (string) The character encoding mode
+
+### `getCharset()`
+
+Gets the currently set character encoding
+
+Returns a string of the currently set character encoding
+
+### `getHttpContentTypeHeader()`
+
+Returns a string to be used in the HTTP `Content-Type` header or in a pre-HTML5 `<meta>` tag to set the character set
+
+### `getMetaCharsetTag()`
+
+Returns a `<meta>` tag to set the document's character set based on the current profile

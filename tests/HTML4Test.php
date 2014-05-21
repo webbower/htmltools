@@ -6,6 +6,7 @@ class HTML4Test extends PHPUnit_Framework_TestCase
 {
     protected function setUp() {
         HTML::setProfile(HTML::HTML4_STRICT);
+        HTML::setCharset('UTF-8');
     }
 
     protected function tearDown() {
@@ -154,5 +155,20 @@ class HTML4Test extends PHPUnit_Framework_TestCase
     public function testTagCasing()
     {
         $this->assertEquals('<P CLASS=foo>Lorem ipsum</P>', HTML::tag('P', 'Lorem ipsum', array('CLASS' => 'foo')));
+    }
+
+    public function testCharset()
+    {
+        $this->assertEquals('UTF-8', HTML::getCharset());
+    }
+
+    public function testHttpCharsetValue()
+    {
+        $this->assertEquals('text/html; charset=utf-8', HTML::getHttpContentTypeHeader());
+    }
+
+    public function testCharsetMetaTag()
+    {
+        $this->assertEquals('<meta http-equiv=Content-Type content="text/html; charset=utf-8">', HTML::getMetaCharsetTag());
     }
 }

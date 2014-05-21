@@ -6,6 +6,7 @@ class XHTMLTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp() {
         HTML::setProfile(HTML::XHTML11);
+        HTML::setCharset('UTF-8');
     }
 
     protected function tearDown() {
@@ -157,5 +158,20 @@ class XHTMLTest extends PHPUnit_Framework_TestCase
     public function testTagCasing()
     {
         $this->assertEquals('<p class="foo">Lorem ipsum</p>', HTML::tag('P', 'Lorem ipsum', array('CLASS' => 'foo')));
+    }
+
+    public function testCharset()
+    {
+        $this->assertEquals('UTF-8', HTML::getCharset());
+    }
+
+    public function testHttpCharsetValue()
+    {
+        $this->assertEquals('text/html; charset=utf-8', HTML::getHttpContentTypeHeader());
+    }
+
+    public function testCharsetMetaTag()
+    {
+        $this->assertEquals('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />', HTML::getMetaCharsetTag());
     }
 }

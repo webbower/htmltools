@@ -25,6 +25,11 @@ class HTML
     private static $profile = 'html5';
 
     /**
+     * @var $charset string
+     */
+    private static $charset = 'UTF-8';
+
+    /**
      * @var $empty_tags array HTML tags that are empty tags. Key should be tagname, value should be true
      */
     private static $empty_tags = array(
@@ -420,7 +425,7 @@ class HTML
             throw new \InvalidArgumentException(self::invalidArgumentExceptionMsg(__METHOD__, 1, 'string', $str));
         }
 
-        return htmlspecialchars($str, ENT_QUOTES | self::getEscapeMode(), 'UTF-8', false);
+        return htmlspecialchars($str, ENT_QUOTES | self::getEscapeMode(), self::getCharset(), false);
     }
 
     /**
@@ -527,5 +532,64 @@ class HTML
         } else {
             return ENT_HTML401;
         }
+    }
+
+    /**
+     * Sets the character encoding to work with
+     *
+     * Refer to http://www.php.net/manual/en/mbstring.supported-encodings.php
+     * for supported character encodings
+     *
+     * @param $charset string A character encoding mode
+     * @return void
+     */
+    public static function setCharset($charset = 'UTF-8')
+    {
+        if (!is_string($charset)) {
+            throw new \InvalidArgumentException(self::invalidArgumentExceptionMsg(__METHOD__, 1, 'string', $charset));
+        }
+
+        self::$charset = $charset;
+    }
+
+    /**
+     * Gets the character encoding
+     *
+     * @return string The currently set character encoding
+     */
+    public static function getCharset()
+    {
+        return self::$charset;
+    }
+
+    /**
+     * Returns a string that can be used to set the document's content type
+     *
+     * The returned string can be used as the value for the Content-Type HTTP
+     * header or the equivalent meta tag's value
+     *
+     * @return string The currently set character encoding
+     */
+    public static function getHttpContentTypeHeader()
+    {
+        return 'text/html; charset=' . strtolower(self::getCharset());
+    }
+
+    /**
+     * Returns the meta tag for setting the document character set
+     *
+     * @return string A <meta> tag for the character set
+     */
+    public static function getMetaCharsetTag()
+    {
+        $tagname = 'meta';
+
+        return self::isHtml5() ?
+            HTML::tag($tagname, '', array('charset' => strtolower(self::getCharset()))) :
+            HTML::tag($tagname, '', array(
+                'http-equiv' => 'Content-Type',
+                'content' => self::getHttpContentTypeHeader(),
+            ))
+        ;
     }
 }
