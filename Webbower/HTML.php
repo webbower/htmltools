@@ -8,15 +8,15 @@ class HTML
 
     const HTML5_XML = 'html5-xml';
 
-    const HTML4_STRICT = 'html4-strict';
-
-    const HTML4_TRANS = 'html4-trans';
+    const XHTML11 = 'xhtml11';
 
     const XHTML1_STRICT = 'xhtml1-strict';
 
     const XHTML1_TRANS = 'xhtml1-trans';
 
-    const XHTML11 = 'xhtml11';
+    const HTML4_STRICT = 'html4-strict';
+
+    const HTML4_TRANS = 'html4-trans';
 
     // Configuration flags
     /**
