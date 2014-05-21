@@ -1,0 +1,9 @@
+{
+	"strict": true,
+	"eqnull": true,
+	"smarttabs": true,
+	"globals": {
+		"require": true,
+		"module": true
+	}
+}
